@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	layout:decorator="layout">
+<head>
+<meta charset="ISO-8859-1">
+<title>Book Ticket</title>
+<meta name="viewport">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="dist/css/compstyle.css">
+<link
+	href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap"
+	rel="stylesheet">
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	crossorigin="anonymous"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	crossorigin="anonymous"></script>
+</head>
+<body>
+	<div class="col-10">
+		<div class="row">
+			<nav class="navbar navbar-expand navbar-light bg-light">
+				<a class="navbar-brand" href="./home"> &nbsp &nbsp India
+					Trip.com</a>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="nav justify-content-end">
+						<li class="nav-item"><a class="nav-link"
+							href="./searchjourney">Book a Journey</a></li>
+						<li class="nav-item"><a class="nav-link" href="./mybookings">My Bookings</a></li>
+						<li class="nav-item my-2 my-lg-0 mr-sm-2"><a class="nav-link"
+							href="./login">Login</a></li>
+						<li class="nav-item my-2 my-lg-0 mr-sm-2"><a class="nav-link"
+							href="./logout">Logout</a></li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="col-1"></div>
+		<div class="col-10">
+			<div class="card">
+				<div class="card-body" th:if="${onbooking}">
+					<form th:action="@{/bookticket}"  th:object="${bookticket}" th:method="post">
+						<div class="card-title" >
+						 <input type="hidden" th:value="${bookticket.flight.flightNumber}" th:field="${bookticket.flight.flightNumber}"
+						 name="flighthid" id="flighthid" /> 
+							<div class="alert alert-info" role="alert">
+								Flight No : &nbsp;<a th:text="${bookticket.flight.flightNumber}">
+								</a> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Origin : &nbsp; <a
+									th:text="${bookticket.flight.origin}"> </a> &nbsp; &nbsp;
+								&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Destination:
+								&nbsp; <a th:text="${bookticket.flight.destination}"> </a> &nbsp;
+								<br>
+							</div>
+
+							<div class="alert alert-info" role="alert">
+								Fare per passenger [INR]: &nbsp;<a
+									th:text="${bookticket.flight.fare.fare}"> </a> &nbsp; &nbsp;
+								&nbsp; &nbsp; Total Ticket Fare [INR]: &nbsp;<a
+									th:text="${bookticket.totalfare}"> </a>
+							</div>
+						</div>
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col">First name</th>
+									<th scope="col">Last Name</th>
+									<th scope="col">gender</th>
+									<th scope="col">Age</th>
+									<th scope="col">Phone no</th>
+								</tr>
+
+							</thead>
+							<tbody>
+								<th:block th:each="passenger,pasindex : ${bookticket.passangerDetails}">
+									<tr>
+										<td th:text="${passenger.id}" th:field="${bookticket.passangerDetails[__${pasindex.index}__].id}"></td>
+										<td><input type="text" required="required"
+											th:value="${passenger.firstName}" name="passfn" id="passfn" th:field="${bookticket.passangerDetails[__${pasindex.index}__].firstName}"></td>
+										<td><input type="text" required="required"
+											th:value="${passenger.lastName}" name="passln" id="passln" th:field="${bookticket.passangerDetails[__${pasindex.index}__].lastName}"></td>
+										<td><select class="form-control"
+											th:value="${passenger.gender}" name="passgen" id="passgen"
+											required="required" th:field="${bookticket.passangerDetails[__${pasindex.index}__].gender}">
+												<option value="M">Male</option>
+												<option value="F">Female</option>
+										</select></td>
+										<td><input type="text" required="required" th:value="${passenger.age}"    name="passage"  id="passage" th:field="${bookticket.passangerDetails[__${pasindex.index}__].age}"></td>
+										<td><input type="text" required="required" th:value="${passenger.mobileNo}"  name="mobno" id="mobno" th:field="${bookticket.passangerDetails[__${pasindex.index}__].mobileNo}"></td>
+									</tr>
+								</th:block>
+							</tbody>
+						</table>
+						<div class="alert alert-success" role="alert">
+							Tickets will be emailed to : &nbsp; <a
+								th:text=${bookticket.bookingEmail}></a>
+						</div>
+						&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+						<input type="submit" class="btn btn-outline-primary" value="Book Ticket">
+					</form>
+				</div>
+				<div class="card" th:if="${successfulbooking}">
+				<div class="card-header">Ticket booking confirmation/ failure response</div>			
+				 	<div class="card-body">
+						<h5 th:text="${bookingmsg}"> </h5>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-1"></div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	layout:decorator="layout">
+<head>
+<meta charset="ISO-8859-1">
+<title>All Bookings</title>
+<meta name="viewport">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="dist/css/compstyle.css">
+<link
+	href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap"
+	rel="stylesheet">
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	crossorigin="anonymous"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	crossorigin="anonymous"></script>
+<style>
+body {
+	background-image: url(flight.jpg)
+}
+</style>
+</head>
+<body>
+	<div class="col-10">
+		<div class="row">
+			<nav class="navbar navbar-expand navbar-light bg-light">
+				<a class="navbar-brand" href="/"> &nbsp &nbsp India Trip.com</a>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="nav justify-content-end">
+						<li class="nav-item"><a class="nav-link"
+							href="./searchjourney">Book a Journey</a></li>
+						<li class="nav-item"><a class="nav-link" href="./mybookings">My
+								Bookings</a></li>
+						<li class="nav-item my-2 my-lg-0 mr-sm-2"><a class="nav-link"
+							href="./login">Login</a></li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="col-1"></div>
+		<div class="col-10">
+			<div class="card">
+				<div class="card-header">
+					Welcome <a th:text="${bookingDetails.userName}"></a> &nbsp;!
+				</div>
+				<div class="card-body">
+					<div class="container" th:if="${bookingsFound}">	
+					<div class="card">			
+							<th:block th:each="bookingDetail: ${bookingDetails.bookingRecords}">
+							<table class="table">
+								<thead><tr>
+									<th>BookId: <a th:text="${bookingDetail.bookingId}"></a></th>
+									<th>Journey date: <a th:text="${bookingDetail.flightNumber}"></a></th>
+									<th>Origin: <a th:text="${bookingDetail.origin}"></a></th>
+									<th>Dest: <a th:text="${bookingDetail.destination}"></a></th>
+									<th>Status: <a th:text="${bookingDetail.status}"></a></th>
+									<th>Date: <a th:text="${bookingDetail.flightDate}"></a></th>
+									<th>Time: <a th:text="${bookingDetail.flightTime}"></a></th></tr>
+								</thead>
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th scope="col">First Name</th> <th scope="col">Last Name</th> <th scope="col">Age</th> <th scope="col">Mobile</th>
+										</tr>
+									</thead>
+									<tbody>
+									<th:block th:each="passanger : ${bookingDetail.passengers2}">										
+										<tr><td th:text="${passanger.firstName}"> </td>
+										    <td th:text="${passanger.lastName}"> </td>
+											<td th:text="${passanger.age}"> </td>
+											<td th:text="${passanger.mobileNumber}"> </td></tr>										
+									</th:block>
+									</tbody>
+								</table>								
+							</th:block>
+						</table>
+						</div>	
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-1"></div>
+	</div>
+</body>
+</html>
