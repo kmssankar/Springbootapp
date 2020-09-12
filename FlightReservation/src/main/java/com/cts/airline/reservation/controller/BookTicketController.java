@@ -18,6 +18,7 @@ public class BookTicketController {
 	@Autowired
 	BookTicketService bookTicketService;
 	
+	
 	@GetMapping("/bookticket")
 	public String geBbookticket(Model model, @RequestParam String flightno , @RequestParam int count) {
 		boolean onbooking = true;
@@ -39,8 +40,7 @@ public class BookTicketController {
 		boolean successfulbooking =true;
 		model.addAttribute("onbooking",onbooking);
 	    model.addAttribute("successfulbooking",successfulbooking);
-		model.addAttribute("bookingmsg",msg);
-		 
+		model.addAttribute("bookingmsg",msg);		 
 		return "bookticket" ;
 	}
 	
